@@ -15,6 +15,7 @@
                 <artifactId>appassembler-maven-plugin</artifactId>
                 <version>1.10</version>
                 <configuration>
+                    <extraJvmArguments>-Xbootclasspath/p:/Users/albertwold/.m2/repository/org/mortbay/jetty/alpn/alpn-boot/8.1.2.v20141202/alpn-boot-8.1.2.v20141202.jar</extraJvmArguments>
                     <programs>
                         <program>
                             <mainClass>com.ifactorinc.pushtester.PushTester</mainClass>
@@ -50,6 +51,16 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mortbay.jetty.alpn</groupId>
+            <artifactId>alpn-boot</artifactId>
+            <version>8.1.2.v20141202</version>
         </dependency>
     </dependencies>
 
