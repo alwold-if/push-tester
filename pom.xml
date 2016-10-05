@@ -20,6 +20,10 @@
                             <mainClass>com.ifactorinc.pushtester.PushTester</mainClass>
                             <id>push-tester</id>
                         </program>
+                        <program>
+                            <mainClass>com.ifactorinc.pushtester.TokenPushTester</mainClass>
+                            <id>token-push-tester</id>
+                        </program>
                     </programs>
                 </configuration>
             </plugin>
@@ -36,6 +40,16 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
         </dependency>
     </dependencies>
 
