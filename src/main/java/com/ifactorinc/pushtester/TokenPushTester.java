@@ -25,12 +25,13 @@ public class TokenPushTester {
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         if (args.length < 4) {
-            System.out.println("Usage: token-push-tester <key file> <team id> <device token> <bundle id>");
+            System.out.println("Usage: token-push-tester <key file> <key id> <team id> <device token> <bundle id>");
         } else {
             String keyFile = args[0];
-            String teamId = args[1];
-            String deviceToken = args[2];
-            String bundleId = args[3];
+            String keyId = args[1];
+            String teamId = args[2];
+            String deviceToken = args[3];
+            String bundleId = args[4];
 
             byte[] pkcs8 = FileUtils.readFileToByteArray(new File(keyFile));
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(pkcs8);
@@ -40,6 +41,7 @@ public class TokenPushTester {
                     .setIssuer(teamId)
                     .setIssuedAt(new Date())
                     .signWith(SignatureAlgorithm.ES256, key)
+                    .setHeaderParam("kid", keyId)
                     .compact();
             System.out.println(compactJws);
             send(deviceToken, compactJws, bundleId);
@@ -53,12 +55,13 @@ public class TokenPushTester {
 
         RequestBody body = RequestBody.create(JSON, "{ \"aps\": { \"alert\": \"Hello world\"} }");
         Request request = new Request.Builder()
-                .url(SANDBOX+"/3/device/"+deviceToken)
+                .url(PRODUCTION+"/3/device/"+deviceToken)
                 .post(body)
                 .header("authorization", "Bearer "+jwt)
                 .header("apns-topic", bundleId)
                 .build();
+        System.out.println("request: "+request);
         Response response = client.newCall(request).execute();
-        System.out.println(response.body().string());
+        System.out.println("response: "+response.body().string());
     }
 }
