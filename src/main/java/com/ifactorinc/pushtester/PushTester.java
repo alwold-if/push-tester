@@ -2,10 +2,7 @@ package com.ifactorinc.pushtester;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ifactorinc.pushtester.config.Config;
-import com.notnoop.apns.APNS;
-import com.notnoop.apns.ApnsService;
-import com.notnoop.apns.ApnsServiceBuilder;
-import com.notnoop.apns.EnhancedApnsNotification;
+import com.notnoop.apns.*;
 
 import java.io.File;
 import java.util.Date;
@@ -24,7 +21,8 @@ public class PushTester {
             Config config = objectMapper.readValue(new File(args[0]), Config.class);
             ApnsServiceBuilder builder = APNS
                     .newService()
-                    .withCert(config.getCertificate().getFile(), config.getCertificate().getPassword());
+                    .withCert(config.getCertificate().getFile(), config.getCertificate().getPassword())
+                    .withDelegate(new LoggingDelegate());
             if (config.getEnvironment().equals(Config.ENVIRONMENT_PRODUCTION)) {
                 builder = builder.withProductionDestination();
             } else if (config.getEnvironment().equals(Config.ENVIRONMENT_SANDBOX)) {
